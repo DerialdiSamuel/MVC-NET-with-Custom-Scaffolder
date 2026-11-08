@@ -14,9 +14,9 @@ public class MasterJenisBukusController : Controller
     }
 
     // GET: MASTERJENISBUKUS
-    public async Task<IActionResult> Index()    
+    public async Task<IActionResult> Index()
     {
-        return View(await _context.MasterJenisBukus.ToListAsync());
+        return View("~/Views/MasterJenisBuku/Index.cshtml", await _context.MasterJenisBukus.ToListAsync());
     }
 
     // GET: MASTERJENISBUKUS/Details/5
@@ -34,13 +34,13 @@ public class MasterJenisBukusController : Controller
             return NotFound();
         }
 
-        return View(masterjenisbuku);
+        return View("~/Views/MasterJenisBuku/Details.cshtml", masterjenisbuku);
     }
 
     // GET: MASTERJENISBUKUS/Create
     public IActionResult Create()
     {
-        return View();
+        return View("~/Views/MasterJenisBuku/Create.cshtml");
     }
 
     // POST: MASTERJENISBUKUS/Create
@@ -48,7 +48,7 @@ public class MasterJenisBukusController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,JenisBuku,Bukus")] MasterJenisBuku masterjenisbuku)
+    public async Task<IActionResult> Create([Bind("Id,JenisBuku")] MasterJenisBuku masterjenisbuku)
     {
         if (ModelState.IsValid)
         {
@@ -56,7 +56,7 @@ public class MasterJenisBukusController : Controller
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-        return View(masterjenisbuku);
+        return View("~/Views/MasterJenisBuku/Create.cshtml", masterjenisbuku);
     }
 
     // GET: MASTERJENISBUKUS/Edit/5
@@ -72,7 +72,7 @@ public class MasterJenisBukusController : Controller
         {
             return NotFound();
         }
-        return View(masterjenisbuku);
+        return View("~/Views/MasterJenisBuku/Edit.cshtml", masterjenisbuku);
     }
 
     // POST: MASTERJENISBUKUS/Edit/5
@@ -80,7 +80,7 @@ public class MasterJenisBukusController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? id, [Bind("Id,JenisBuku,Bukus")] MasterJenisBuku masterjenisbuku)
+    public async Task<IActionResult> Edit(int? id, [Bind("Id,JenisBuku")] MasterJenisBuku masterjenisbuku)
     {
         if (id != masterjenisbuku.Id)
         {
@@ -107,7 +107,7 @@ public class MasterJenisBukusController : Controller
             }
             return RedirectToAction(nameof(Index));
         }
-        return View(masterjenisbuku);
+        return View("~/Views/MasterJenisBuku/Edit.cshtml", masterjenisbuku);
     }
 
     // GET: MASTERJENISBUKUS/Delete/5
@@ -125,7 +125,7 @@ public class MasterJenisBukusController : Controller
             return NotFound();
         }
 
-        return View(masterjenisbuku);
+        return View("~/Views/MasterJenisBuku/Delete.cshtml", masterjenisbuku);
     }
 
     // POST: MASTERJENISBUKUS/Delete/5
@@ -133,14 +133,24 @@ public class MasterJenisBukusController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int? id)
     {
-        var masterjenisbuku = await _context.MasterJenisBukus.FindAsync(id);
-        if (masterjenisbuku != null)
+        try
         {
-            _context.MasterJenisBukus.Remove(masterjenisbuku);
-        }
+            var masterjenisbuku = await _context.MasterJenisBukus.FindAsync(id);
+            if (masterjenisbuku != null)
+            {
+                _context.MasterJenisBukus.Remove(masterjenisbuku);
+            }
 
-        await _context.SaveChangesAsync();
-        return RedirectToAction(nameof(Index));
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+        catch (Exception ex)
+        {
+            // return view error
+            //ViewData["ErrorMessage"] = ex.Message;
+            ViewBag.ExceptionMessage = ex.Message;
+            return View("~/Views/Shared/Error.cshtml");
+        }
     }
 
     private bool MasterJenisBukuExists(int? id)

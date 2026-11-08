@@ -10,18 +10,13 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <form asp-action="Edit" method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="JenisBuku" class="control-label"></label>
                 <input asp-for="JenisBuku" class="form-control" />
                 <span asp-validation-for="JenisBuku" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Bukus" class="control-label"></label>
-                <input asp-for="Bukus" class="form-control" />
-                <span asp-validation-for="Bukus" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

@@ -1,65 +1,46 @@
 @model IEnumerable<BookManagement.Models.Buku>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Data Buku";
 }
 
-<h1>Index</h1>
+<h1>Data Buku</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
+<form asp-action="Index" method="get" class="row g-2 mb-3">
+    <div class="col-auto">
+        <input name="search" value="@ViewData["Search"]" class="form-control"
+               placeholder="Cari judul, penulis, jenis buku..." />
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary">Cari</button>
+        <a asp-action="Index" class="btn btn-secondary">Reset</a>
+        <a asp-action="Export" asp-route-search="@ViewData["Search"]" class="btn btn-success">Export CSV</a>
+        <a asp-action="Create" class="btn btn-outline-primary">Tambah Buku</a>
+    </div>
+</form>
+
+<table class="table table-striped">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Judul)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Penulis)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.JenisBuku)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TanggalRilis)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.JumlahHalaman)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.JenisBukuNavigation)
-            </th>
-            <th></th>
+            <th>Judul</th><th>Penulis</th><th>Jenis Buku</th>
+            <th>Tanggal Rilis</th><th>Jumlah Halaman</th><th>Aksi</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+    @foreach (var item in Model)
+    {
         <tr>
-            <td>
-                @Html.DisplayFor(model => item.Judul)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.Penulis)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.JenisBuku)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.TanggalRilis)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.JumlahHalaman)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.JenisBukuNavigation)
-            </td>
+            <td>@item.Judul</td>
+            <td>@item.Penulis</td>
+            <td>@item.JenisBukuNavigation?.JenisBuku</td>
+            <td>@item.TanggalRilis.ToString("yyyy-MM-dd")</td>
+            <td>@item.JumlahHalaman</td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Details" asp-route-id="@item.Id">Detail</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Hapus</a>
             </td>
         </tr>
-}
+    }
     </tbody>
 </table>

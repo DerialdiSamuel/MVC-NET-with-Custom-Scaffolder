@@ -1,0 +1,20 @@
+@{
+    ViewData["Title"] = "Custom Scaffolder";
+}
+
+<h1>Custom Scaffolder</h1>
+<p>Pilih tabel SQL Server untuk mengunduh class model C# berdasarkan kolom tabel tersebut.</p>
+<form asp-action="Generate" method="post">
+    @Html.AntiForgeryToken()
+    <div class="mb-3">
+        <label for="tableName" class="form-label">Nama tabel</label>
+        <select id="tableName" name="tableName" class="form-select" required>
+            <option value="">-- Pilih tabel --</option>
+            @foreach (string table in ViewBag.Tables)
+            {
+                <option value="@table">@table</option>
+            }
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Generate .cs</button>
+</form>

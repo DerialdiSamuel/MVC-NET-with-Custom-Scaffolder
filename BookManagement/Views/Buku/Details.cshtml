@@ -1,59 +1,23 @@
 @model BookManagement.Models.Buku
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detail Buku";
 }
 
-<h1>Details</h1>
-
+<h1>Detail Buku</h1>
+<dl class="row">
+    <dt class="col-sm-2">Judul</dt>
+    <dd class="col-sm-10">@Model.Judul</dd>
+    <dt class="col-sm-2">Penulis</dt>
+    <dd class="col-sm-10">@Model.Penulis</dd>
+    <dt class="col-sm-2">Jenis Buku</dt>
+    <dd class="col-sm-10">@Model.JenisBukuNavigation?.JenisBuku</dd>
+    <dt class="col-sm-2">Tanggal Rilis</dt>
+    <dd class="col-sm-10">@Model.TanggalRilis.ToString("yyyy-MM-dd")</dd>
+    <dt class="col-sm-2">Jumlah Halaman</dt>
+    <dd class="col-sm-10">@Model.JumlahHalaman</dd>
+</dl>
 <div>
-    <h4>Buku</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Judul)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Judul)
-        </dd>
-    </dl>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Penulis)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Penulis)
-        </dd>
-    </dl>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.JenisBuku)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.JenisBuku)
-        </dd>
-    </dl>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TanggalRilis)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TanggalRilis)
-        </dd>
-    </dl>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.JumlahHalaman)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.JumlahHalaman)
-        </dd>
-    </dl>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.JenisBukuNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.JenisBukuNavigation)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Kembali</a>
 </div>
